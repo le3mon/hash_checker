@@ -2,6 +2,20 @@ import argparse
 import os
 import json
 import hashlib
+import requests
+
+work_dir = os.getcwd()
+
+hash = 'dccfa4b16aa79e273cc7ffc35493c495a7fd09f92a4b790f2dc41c65f64d5378'
+url = 'https://www.virustotal.com/api/v3/files/{}'.format(hash) 
+
+headers = {'accept': 'application/json',
+           'x-apikey': '<api-key>'}
+
+response = requests.get(url, headers=headers)
+
+# print(response.text)
+print(response.status_code)
 
 def hash_parse(json, path):
     os.chdir(path)
@@ -28,6 +42,8 @@ def hash_parse(json, path):
     for i in dir_list:
         hash_parse(json, path+'\\'+i)
 
+# def hash_
+
 parser = argparse.ArgumentParser()
 parser.add_argument('-j', '--json', default=False, help='result json file Path')
 parser.add_argument('-d', '--dir', default=False, help='source directory path')
@@ -43,11 +59,9 @@ json_data = {
 }
 
 # if args.__dict__['dir']:
-    # dir_path = args.__dict__['dir']
-    # dir_list = os.listdir(dir_path)
-    # os.chdir(dir_path)
+#     dir_path = args.__dict__['dir']
 
-hash_parse(json_data, dir_path)
+# hash_parse(json_data, dir_path)
 
-with open(dest_path+'\\result.json', 'w') as f:
-    json.dump(json_data, f, indent=2, ensure_ascii=False)
+# with open(work_dir+'\\result.json', 'w') as f:
+#     json.dump(json_data, f, indent=2, ensure_ascii=False)
